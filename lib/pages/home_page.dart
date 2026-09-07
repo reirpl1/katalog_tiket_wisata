@@ -154,9 +154,9 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
-                color: _plum.withOpacity(0.08),
+                color: _plum.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: _plum.withOpacity(0.25)),
+                border: Border.all(color: _plum.withValues(alpha: 0.25)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -261,7 +261,7 @@ class _TampilanKosong extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.travel_explore, size: 56, color: _plum.withOpacity(0.5)),
+          Icon(Icons.travel_explore, size: 56, color: _plum.withValues(alpha: 0.5)),
           const SizedBox(height: 12),
           Text(
             kataKunci.isEmpty

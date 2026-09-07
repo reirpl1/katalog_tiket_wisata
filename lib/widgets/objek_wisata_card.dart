@@ -35,7 +35,7 @@ class ObjekWisataCard extends StatelessWidget{
                                         height: 64,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                            color: const Color(0xFF1B4B43).withOpacity(0.12), //Deep Teal
+                                            color: const Color(0xFF1B4B43).withValues(alpha: 0.12), //Deep Teal //Deep Teal
                                             borderRadius: BorderRadius.circular(10),
                                         ),
                                         alignment: Alignment.center,

@@ -22,7 +22,7 @@ class DetailWisataPage extends StatelessWidget {
           Container(
             height: 160,
             decoration: BoxDecoration(
-              color: const Color(0xFF1B4B43).withOpacity(0.15),
+              color: const Color(0xFF1B4B43).withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(16),
             ),
             alignment: Alignment.center,
@@ -51,9 +51,9 @@ class DetailWisataPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF6E3B4C).withOpacity(0.08), //plum
+              color: const Color(0xFF6E3B4C).withValues(alpha: 0.08), //plum
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFF6E3B4C).withOpacity(0.3)),
+              border: Border.all(color: const Color(0xFF6E3B4C).withValues(alpha: 0.3)),
             ),
             child: const Text(
               'Ingat:  rombongan dengan 20 orang atau lebih otomatis'
