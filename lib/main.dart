@@ -10,7 +10,7 @@ class AplikasiKatalogWisata extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const deepTeal = Color(0xFF1B4B43);
+    const deepTeal = Color(0xFF14213D);
     const plum = Color(0xFF6E3B4C);
     const sand = Color(0xFFF1E4C8);
     const charcoal = Color(0xFF2C2A28);

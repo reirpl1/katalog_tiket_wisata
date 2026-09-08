@@ -36,14 +36,14 @@ class ObjekWisataCard extends StatelessWidget{
                                         height: 64,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                            color: const Color(0xFF1B4B43).withValues(alpha: 0.22), //Deep Teal 
+                                            color: const Color(0xFF14213D).withValues(alpha: 0.22), //Navy 
                                             borderRadius: BorderRadius.circular(10),
                                         ),
                                         alignment: Alignment.center,
                                         child: Icon(
-                                            ikonUntukJenis(data.jenis),
+                                            ikonUntukJenis(data.namaObjek, data.jenis),
                                             size: 30,
-                                            color: Color(0xFF1B4B43),//deep teal
+                                            color: Color(0xFF14213D),//navy
                                         ),
                                     ),
                                     const SizedBox(height: 6),

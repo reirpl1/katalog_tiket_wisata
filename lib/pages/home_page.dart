@@ -6,8 +6,8 @@ import '../utils/ringkasan_data.dart';
 import '../widgets/objek_wisata_card.dart';
 import 'detail_wisata_page.dart';
 
-const _deepTeal = Color(0xFF1B4B43);
-const _plum = Color(0xFF6E3B4C);
+const _navy = Color(0xFF14213D);
+const _plum = Color.fromARGB(255, 81, 59, 110);
 const _sand = Color(0xFFF1E4C8);
 
 class HomePage extends StatefulWidget {
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Jelajah Nusantara — Katalog Wisata'),
-        backgroundColor: _deepTeal,
+        backgroundColor: _navy,
         foregroundColor: _sand,
       ),
       body: Column(
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                     _urutNaik
                         ? Icons.arrow_downward_rounded
                         : Icons.arrow_upward_rounded,
-                    color: _deepTeal,
+                    color: _navy
                   ),
                 ),
               ],
@@ -235,7 +235,7 @@ class _ChipKategori extends StatelessWidget {
       label: Text(label, style: const TextStyle(fontSize: 12)),
       selected: terpilih,
       onSelected: (_) => onTap(),
-      selectedColor: _deepTeal,
+      selectedColor: _navy,
       backgroundColor: _sand,
       labelStyle: TextStyle(
         color: terpilih ? Colors.white : const Color(0xFF2C2A28),

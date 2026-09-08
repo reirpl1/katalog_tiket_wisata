@@ -11,7 +11,7 @@ final List<ObjekWisata> daftarWisata = [
 
   const ObjekWisata(
       namaObjek: 'Candi Borobudur',
-      jenis: 'Budaya',
+      jenis: 'Candi',
       tiketDewasa: 80000,
       tiketAnak: 75000,
       kuotaHarian: 130,
@@ -34,10 +34,10 @@ final List<ObjekWisata> daftarWisata = [
   ),
 
   const ObjekWisata(
-      namaObjek: 'Air Terjun Madakaripura',
-      jenis: 'Alam',
+      namaObjek: 'Gunung Bromo',
+      jenis: 'Gunung',
       tiketDewasa: 80000,
-      tiketAnak: 75000,
+      tiketAnak: 75000  ,
       kuotaHarian: 900,
   ),
 
@@ -60,6 +60,22 @@ final List<ObjekWisata> daftarWisata = [
   const ObjekWisata(
       namaObjek: 'Kebun Binatang Gembira Loka',
       jenis: 'Kebun Binatang',
+      tiketDewasa: 85000,
+      tiketAnak: 80000,
+      kuotaHarian: 1500,
+  ),
+
+  const ObjekWisata(
+      namaObjek: 'Museum Nasional',
+      jenis: 'Museum',
+      tiketDewasa: 85000,
+      tiketAnak: 80000,
+      kuotaHarian: 1500,
+  ),
+
+  const ObjekWisata(
+      namaObjek: 'Tumpak Sewu',
+      jenis: 'Air Terjun',
       tiketDewasa: 85000,
       tiketAnak: 80000,
       kuotaHarian: 1500,

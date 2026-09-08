@@ -14,7 +14,7 @@ class DetailWisataPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(data.namaObjek),
-        backgroundColor: const Color(0xFF1B4B43), //deep teal
+        backgroundColor: const Color(0xFF14213D), //navy
         foregroundColor: const Color(0xFFF1E4C8), //sand
       ),
       body: ListView(
@@ -23,14 +23,14 @@ class DetailWisataPage extends StatelessWidget {
           Container(
             height: 160,
             decoration: BoxDecoration(
-              color: const Color(0xFF1B4B43).withValues(alpha: 0.22),
+              color: const Color(0xFF14213D).withValues(alpha: 0.22),
               borderRadius: BorderRadius.circular(16),
             ),
             alignment: Alignment.center,
             child: Icon(
-              ikonUntukJenis(data.jenis),
+              ikonUntukJenis(data.namaObjek, data.jenis),
               size: 64,
-              color: Color(0xFF1B4B43),
+              color: Color(0xFF14213D),
             ),
           ),
           const SizedBox(height: 20),
