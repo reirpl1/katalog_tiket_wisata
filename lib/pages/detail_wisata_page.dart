@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/objek_wisata.dart';
 import '../utils/format_rupiah.dart';
+import '../utils/ikon_kategori.dart';
 
 // Fitur F5 - HALAMAN RINCIAN: halaman ini menampilkan seluruh data objek wisata
 class DetailWisataPage extends StatelessWidget {
@@ -22,12 +23,12 @@ class DetailWisataPage extends StatelessWidget {
           Container(
             height: 160,
             decoration: BoxDecoration(
-              color: const Color(0xFF1B4B43).withValues(alpha: 0.15),
+              color: const Color(0xFF1B4B43).withValues(alpha: 0.22),
               borderRadius: BorderRadius.circular(16),
             ),
             alignment: Alignment.center,
-            child: const Icon(
-              Icons.landscape_outlined,
+            child: Icon(
+              ikonUntukJenis(data.jenis),
               size: 64,
               color: Color(0xFF1B4B43),
             ),
@@ -51,12 +52,12 @@ class DetailWisataPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF6E3B4C).withValues(alpha: 0.08), //plum
+              color: const Color(0xFF6E3B4C).withValues(alpha: 0.15), //plum
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFF6E3B4C).withValues(alpha: 0.3)),
+              border: Border.all(color: const Color(0xFF6E3B4C).withValues(alpha: 0.5)),
             ),
             child: const Text(
-              'Ingat:  rombongan dengan 20 orang atau lebih otomatis'
+              'Ingat:  rombongan dengan 20 orang atau lebih otomatis\n'
               'mendapat potongan harga 15% pada halaman utama',
               style: TextStyle(fontSize: 12.5, color: Color(0xFF2C2A28)),
             ),

@@ -1,3 +1,5 @@
+import '../utils/format_rupiah.dart';
+
 class ObjekWisata {
   final String namaObjek;
   final String jenis;
@@ -14,7 +16,7 @@ class ObjekWisata {
   });
 
   String ringkasanTarif() {
-    return 'Dewasa Rp$tiketDewasa Anak Rp$tiketAnak';
+    return 'Dewasa ${formatRupiah(tiketDewasa)} Anak ${formatRupiah(tiketAnak)}';
   }
 }
 

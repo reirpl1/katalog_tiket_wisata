@@ -154,9 +154,9 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
-                color: _plum.withValues(alpha: 0.08),
+                color: _plum.withValues(alpha: 0.18),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: _plum.withValues(alpha: 0.25)),
+                border: Border.all(color: _plum.withValues(alpha: 0.45)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
