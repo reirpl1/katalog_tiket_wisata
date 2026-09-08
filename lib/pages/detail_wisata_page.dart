@@ -13,9 +13,11 @@ class DetailWisataPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(data.namaObjek),
+        title: Text(
+          data.namaObjek,
+          style: const TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF14213D), //navy
-        foregroundColor: const Color(0xFFF1E4C8), //sand
+        foregroundColor: const Color.fromARGB(255, 211, 190, 144), //sand
       ),
       body: ListView(
         padding: const EdgeInsets.all(20),

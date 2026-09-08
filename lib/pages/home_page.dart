@@ -80,7 +80,9 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jelajah Nusantara — Katalog Wisata'),
+        title: const Text(
+          'Jelajah Nusantara — Katalog Wisata',
+          style: TextStyle(color: Colors.white)),
         backgroundColor: _navy,
         foregroundColor: _sand,
       ),
@@ -97,8 +99,16 @@ class _HomePageState extends State<HomePage> {
                 fillColor: _sand,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(color: _navy.withValues(alpha: 0.35), width: 1),
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: _navy.withValues(alpha: 0.35), width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: _navy, width: 1.5)
+                )
               ),
             ),
           ),
