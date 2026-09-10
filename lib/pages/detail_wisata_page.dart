@@ -22,17 +22,28 @@ class DetailWisataPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Container(
-            height: 160,
-            decoration: BoxDecoration(
-              color: const Color(0xFF14213D).withValues(alpha: 0.22),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            alignment: Alignment.center,
-            child: Icon(
-              ikonUntukJenis(data.namaObjek, data.jenis),
-              size: 64,
-              color: Color(0xFF14213D),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.asset(
+              data.gambar,
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF14213D).withValues(alpha: 0.22),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    ikonUntukJenis(data.namaObjek, data.jenis),
+                    size: 64,
+                    color: const Color((0xFF14213D)),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(height: 20),

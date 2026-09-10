@@ -7,6 +7,7 @@ final List<ObjekWisata> daftarWisata = [
     tiketDewasa: 100000,
     tiketAnak: 90000,
     kuotaHarian: 100,
+    gambar: 'assets/images/raja_ampat.jpg',
 ),
 
   const ObjekWisata(
@@ -15,6 +16,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 80000,
       tiketAnak: 75000,
       kuotaHarian: 130,
+      gambar: 'assets/images/candi_borobudur.jpg',
   ),
 
   const ObjekWisata(
@@ -23,6 +25,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 50000,
       tiketAnak: 40000,
       kuotaHarian: 200,
+      gambar: 'assets/images/goa_pindul.jpg',
   ),
 
   const ObjekWisata(
@@ -31,6 +34,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 20000,
       tiketAnak: 18000,
       kuotaHarian: 500,
+      gambar: 'assets/images/pantai_wediombo.jpg',
   ),
 
   const ObjekWisata(
@@ -39,6 +43,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 80000,
       tiketAnak: 75000  ,
       kuotaHarian:300,
+      gambar: 'assets/images/gunung_bromo.jpg',
   ),
 
   const ObjekWisata(
@@ -47,6 +52,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 25000,
       tiketAnak: 23000,
       kuotaHarian: 1000,
+      gambar: 'assets/images/hutan_pinus.jpg',
   ),
 
   const ObjekWisata(
@@ -55,6 +61,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 60000,
       tiketAnak: 50000,
       kuotaHarian: 1000,
+      gambar: 'assets/images/pantai_timang.jpg',
   ),
 
   const ObjekWisata(
@@ -63,6 +70,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 85000,
       tiketAnak: 80000,
       kuotaHarian: 1500,
+      gambar: 'assets/images/gembira_loka.jpg',
   ),
 
   const ObjekWisata(
@@ -71,6 +79,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 85000,
       tiketAnak: 80000,
       kuotaHarian: 1500,
+      gambar: 'assets/images/museum_nasional.jpg',
   ),
 
   const ObjekWisata(
@@ -79,5 +88,6 @@ final List<ObjekWisata> daftarWisata = [
       tiketDewasa: 85000,
       tiketAnak: 80000,
       kuotaHarian: 100,
+      gambar: 'assets/images/tumpak_sewu.jpg',
   ),
 ];

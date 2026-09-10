@@ -32,18 +32,29 @@ class ObjekWisataCard extends StatelessWidget{
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                    Container(
-                                        height: 64,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xFF14213D).withValues(alpha: 0.22), //Navy 
-                                            borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                            ikonUntukJenis(data.namaObjek, data.jenis),
-                                            size: 30,
-                                            color: Color(0xFF14213D),//navy
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                            data.gambar,
+                                            height: 90,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                                return Container(
+                                                    height: 90, //dari 64 dirubah menjadi 90 agar foto tidak gepeng
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                        color: const Color(0xFF14213D).withValues(alpha: 0.15),
+                                                        borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    alignment: Alignment.center,
+                                                    child: Icon(
+                                                        ikonUntukJenis(data.namaObjek, data.jenis),
+                                                        size: 30,
+                                                        color: const Color(0xFF14213D)
+                                                    ),
+                                                );
+                                            },
                                         ),
                                     ),
                                     const SizedBox(height: 6),

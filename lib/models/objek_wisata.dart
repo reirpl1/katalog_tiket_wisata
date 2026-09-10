@@ -6,6 +6,7 @@ class ObjekWisata {
   final int tiketDewasa;
   final int tiketAnak;
   final int kuotaHarian;
+  final String gambar;
 
   const ObjekWisata({
     required this.namaObjek,
@@ -13,6 +14,7 @@ class ObjekWisata {
     required this.tiketDewasa,
     required this.tiketAnak,
     required this.kuotaHarian,
+    required this.gambar,
   });
 
   String ringkasanTarif() {
