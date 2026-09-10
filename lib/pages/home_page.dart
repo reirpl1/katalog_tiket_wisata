@@ -68,9 +68,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   int _tentukanJumlahKolom(double lebar) {
-    if (lebar >= 1000) return 4;
-    if (lebar >= 650) return 3;
-    return 2;
+    if (lebar >= 900) return 3;
+    if (lebar >= 600) return 2;
+    return 1;
   }
 
   @override
@@ -171,14 +171,22 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '${ringkasan.totalObjek} objek ditampilkan',
+                  Flexible(
+                    child: Text(
+                      '${ringkasan.totalObjek} objek ditampilkan',
                     style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    'Rata-rata dewasa: ${formatRupiah(ringkasan.rataRataTiketDewasa.round())}',
+                ),
+                 const SizedBox(width: 8),
+                 Flexible(
+                  child: Text(
+                    'Rata-rata: ${formatRupiah(ringkasan.hargaTermurah)} / ${formatRupiah(ringkasan.hargaTermahal)}',
                     style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
                   ),
+                 ),
                 ],
               ),
             ),
@@ -201,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                           crossAxisCount: jumlahKolom,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
-                          mainAxisExtent: 300,
+                          mainAxisExtent: 330,
                         ),
                         itemBuilder: (context, index) {
                           final objek = hasil[index];

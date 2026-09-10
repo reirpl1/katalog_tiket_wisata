@@ -2,31 +2,52 @@ import '../models/objek_wisata.dart';
 
 class RingkasanData {
   final int totalObjek;
-  final double rataRataTiketDewasa;
+  final int hargaTermurah;
+  final int hargaTermahal;
 
   const RingkasanData({
     required this.totalObjek,
-    required this.rataRataTiketDewasa,
+    required this.hargaTermurah,
+    required this.hargaTermahal,
   });
 }
 
-///Fitur F3: menghitung jumlah objek yang tampil dan rata rata tiket dewasa
-///dari daftar yang sudah difilter. Memakai perulangan for manual
-///bukan fold/reduce sesuai instruksi "dihitung dengan perulangan".
-///Dipanggil ulang setiap daftar hasil filter berubah.
+/// F3: menghitung jumlah objek yang tampil, serta harga tiket termurah
+/// dan termahal (dari tiket dewasa dan tiket anak) dari daftar yang sudah difilter
+/// memakai perulangan for manual untuk mencari nilai minimum dan maksimum
 
 RingkasanData hitungRingkasan(List<ObjekWisata> daftar) {
   final totalObjek = daftar.length;
 
-  int jumlahHarga =  0;
-  for (final objek in daftar){
-    jumlahHarga += objek.tiketDewasa;
+  if (daftar.isEmpty) {
+    return const RingkasanData(
+      totalObjek: 0,
+      hargaTermurah: 0,
+      hargaTermahal: 0,
+    );
   }
 
-  final rataRata = totalObjek == 0 ? 0.0 : jumlahHarga / totalObjek;
+  int termurah = daftar.first.tiketDewasa;
+  int termahal = daftar.first.tiketAnak;
+
+  for (final objek in daftar) {
+    if (objek.tiketDewasa < termurah) {
+      termurah = objek.tiketDewasa;
+    }
+    if (objek.tiketDewasa > termahal) {
+      termahal = objek.tiketDewasa;
+    }
+    if (objek.tiketAnak < termurah) {
+      termurah = objek.tiketAnak;
+    }
+    if (objek.tiketAnak > termahal ) {
+      termahal  =  objek.tiketAnak;
+    }
+  }
 
   return RingkasanData(
     totalObjek: totalObjek,
-    rataRataTiketDewasa: rataRata,
+    hargaTermurah: termurah,
+    hargaTermahal: termahal,
   );
 }

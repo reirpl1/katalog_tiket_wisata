@@ -2,7 +2,7 @@ import '../models/objek_wisata.dart';
 
 final List<ObjekWisata> daftarWisata = [
   const ObjekWisata(
-    namaObjek: 'Raja Ampat',
+    namaObjek: 'Raja Ampat tempat healing paling mantap dipadukan dengan air yang jernih dan segar',
     jenis: 'Pantai & Laut',
     tiketDewasa: 100000,
     tiketAnak: 90000,
@@ -38,7 +38,7 @@ final List<ObjekWisata> daftarWisata = [
       jenis: 'Gunung',
       tiketDewasa: 80000,
       tiketAnak: 75000  ,
-      kuotaHarian: 900,
+      kuotaHarian:300,
   ),
 
   const ObjekWisata(
@@ -78,6 +78,6 @@ final List<ObjekWisata> daftarWisata = [
       jenis: 'Air Terjun',
       tiketDewasa: 85000,
       tiketAnak: 80000,
-      kuotaHarian: 1500,
+      kuotaHarian: 100,
   ),
 ];

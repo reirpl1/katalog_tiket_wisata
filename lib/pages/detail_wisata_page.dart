@@ -50,7 +50,7 @@ class DetailWisataPage extends StatelessWidget {
             label: 'Kuota Harian',
             nilai: '${data.kuotaHarian} orang',
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(

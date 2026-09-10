@@ -122,7 +122,7 @@ class _BarisPenghitung extends StatelessWidget {
         ),
         _TombolBulat(icon: Icons.remove, onTap: onKurang),
         SizedBox(
-          width: 22,
+          width: 36,
           child: Text(
             '$nilai',
             textAlign: TextAlign.center,
