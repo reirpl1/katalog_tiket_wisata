@@ -6,11 +6,13 @@ import '../utils/ikon_kategori.dart';
 class ObjekWisataCard extends StatelessWidget{
     final ObjekWisata data;
     final VoidCallback onLihatRincian;
+    final double tinggiGambar;
 
     const ObjekWisataCard({
         super.key,
         required this.data,
         required this.onLihatRincian,
+        required this.tinggiGambar,
     });
 
     @override
@@ -33,29 +35,32 @@ class ObjekWisataCard extends StatelessWidget{
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                     ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        height: tinggiGambar,
                                         child: Image.asset(
-                                            data.gambar,
-                                            height: 90,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (context, error, stackTrace) {
-                                                return Container(
-                                                    height: 90, //dari 64 dirubah menjadi 90 agar foto tidak gepeng
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                        color: const Color(0xFF14213D).withValues(alpha: 0.15),
-                                                        borderRadius: BorderRadius.circular(10),
-                                                    ),
-                                                    alignment: Alignment.center,
-                                                    child: Icon(
-                                                        ikonUntukJenis(data.namaObjek, data.jenis),
-                                                        size: 30,
-                                                        color: const Color(0xFF14213D)
-                                                    ),
-                                                );
-                                            },
+                                          data.gambar,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, error, stackTrace) {
+                                            return Container(
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFF14213D).withValues(alpha: 0.15),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: Icon(
+                                                ikonUntukJenis(data.namaObjek, data.jenis),
+                                                size: 30,
+                                                color: const Color(0xFF14213D),
+                                              ),
+                                            );
+                                          },
                                         ),
+                                      ),
                                     ),
                                     const SizedBox(height: 6),
                                     Text(

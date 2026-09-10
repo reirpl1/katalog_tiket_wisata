@@ -70,8 +70,7 @@ class DetailWisataPage extends StatelessWidget {
               border: Border.all(color: const Color(0xFF6E3B4C).withValues(alpha: 0.5)),
             ),
             child: const Text(
-              'Ingat:  rombongan dengan 20 orang atau lebih otomatis\n'
-              'mendapat potongan harga 15% pada halaman utama',
+              'Ingat: rombongan dengan 20 orang atau lebih otomatis mendapat potongan harga 15% pada halaman utama',
               style: TextStyle(fontSize: 12.5, color: Color(0xFF2C2A28)),
             ),
           ),

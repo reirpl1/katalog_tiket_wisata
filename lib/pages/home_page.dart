@@ -73,6 +73,22 @@ class _HomePageState extends State<HomePage> {
     return 1;
   }
 
+  // menghitung tinggi foto yang proporsional (rasio 16:9) supaya
+  // gambar tidak gepeng diukuran layar manapun
+
+  double  _hitungTinggiGambar(double lebarLayar, int jumlahKolom) {
+    const paddingHorizontalGrid = 32.0; // padding kiri kanan gridView (16+16)
+    const spasiAntarKolom = 12.0; // spasi antar kolom
+    const paddingDalamKartu = 20.0; // padding  kiri kanan gridCard(10+10)
+
+    final totalSpasi = spasiAntarKolom * (jumlahKolom - 1);
+    final lebarKartu = (lebarLayar - paddingHorizontalGrid - totalSpasi) / jumlahKolom;
+    final lebarGambar = lebarKartu - paddingDalamKartu;
+
+    return (lebarGambar * 0.65).clamp(220.0, 300.0);
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     final hasil = _hasilTersaring;
@@ -198,37 +214,43 @@ class _HomePageState extends State<HomePage> {
             child: hasil.isEmpty
                 ? _TampilanKosong(kataKunci: _kataKunci)
                 : LayoutBuilder(
-                    builder: (context, constraints) {
-                      final jumlahKolom =
-                          _tentukanJumlahKolom(constraints.maxWidth);
-                      return GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
-                        itemCount: hasil.length,
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: jumlahKolom,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          mainAxisExtent: 330,
-                        ),
-                        itemBuilder: (context, index) {
-                          final objek = hasil[index];
-                          return ObjekWisataCard(
-                            data: objek,
-                            onLihatRincian: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      DetailWisataPage(data: objek),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  builder: (context, constraints) {
+                    final jumlahKolom =
+                    _tentukanJumlahKolom(constraints.maxWidth);
+                    final tinggiGambar =
+                    _hitungTinggiGambar(constraints.maxWidth, jumlahKolom);
+                    const tinggiKontenLain = 215.0; //nama+jenis+harga+counter+total
+                    final tinggiKartu = tinggiGambar + tinggiKontenLain;
+
+                    return GridView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                      itemCount: hasil.length,
+                      gridDelegate:
+                      SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: jumlahKolom,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        mainAxisExtent: tinggiKartu,
+                      ),
+                      itemBuilder: (context, index) {
+                        final objek = hasil[index];
+                        return ObjekWisataCard(
+                          data: objek,
+                          tinggiGambar: tinggiGambar,
+                          onLihatRincian: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:(_) =>
+                                  DetailWisataPage(data: objek),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
           ),
         ],
       ),
