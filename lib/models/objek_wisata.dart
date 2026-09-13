@@ -7,6 +7,8 @@ class ObjekWisata {
   final int tiketAnak;
   final int kuotaHarian;
   final String gambar;
+  final String? gambarDetail;
+  final List<String> galeriGambar;
 
   const ObjekWisata({
     required this.namaObjek,
@@ -15,7 +17,11 @@ class ObjekWisata {
     required this.tiketAnak,
     required this.kuotaHarian,
     required this.gambar,
+    this.gambarDetail,
+    this.galeriGambar = const [],
   });
+
+  String get gambarUntukDetail => gambarDetail ?? gambar;
 
   String ringkasanTarif() {
     return 'Dewasa ${formatRupiah(tiketDewasa)} Anak ${formatRupiah(tiketAnak)}';

@@ -8,7 +8,13 @@ final List<ObjekWisata> daftarWisata = [
     tiketAnak: 90000,
     kuotaHarian: 100,
     gambar: 'assets/images/raja_ampat.jpg',
-),
+    gambarDetail: 'assets/detail/rajaampat_detail.jpg',
+    galeriGambar: [
+      'assets/images/raja_ampat.jpg',
+      'assets/images/raja_ampat_2.jpg',
+      'assets/images/raja_ampat_3.jpg',
+    ],
+ ),
 
   const ObjekWisata(
       namaObjek: 'Candi Borobudur',
@@ -17,6 +23,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 75000,
       kuotaHarian: 130,
       gambar: 'assets/images/candi_borobudur.jpg',
+      gambarDetail: 'assets/detail/borobudur_detail.jpg',
   ),
 
   const ObjekWisata(
@@ -26,6 +33,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 40000,
       kuotaHarian: 200,
       gambar: 'assets/images/goa_pindul.jpg',
+      gambarDetail: 'assets/detail/goa_detail.jpg',
   ),
 
   const ObjekWisata(
@@ -35,6 +43,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 18000,
       kuotaHarian: 500,
       gambar: 'assets/images/pantai_wediombo.jpg',
+      gambarDetail: 'assets/detail/wediombo_detail.jpg',
   ),
 
   const ObjekWisata(
@@ -44,6 +53,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 75000  ,
       kuotaHarian:300,
       gambar: 'assets/images/gunung_bromo.jpg',
+      gambarDetail: 'assets/detail/bromo_detail.jpg',
   ),
 
   const ObjekWisata(
@@ -53,6 +63,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 23000,
       kuotaHarian: 1000,
       gambar: 'assets/images/hutan_pinus.jpg',
+      gambarDetail: 'assets/detail/pinus_detail.jpg',
   ),
 
   const ObjekWisata(
@@ -62,6 +73,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 50000,
       kuotaHarian: 1000,
       gambar: 'assets/images/pantai_timang.jpg',
+      gambarDetail: 'assets/detail/timang_detail.jpg',
   ),
 
   const ObjekWisata(
@@ -71,6 +83,7 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 80000,
       kuotaHarian: 1500,
       gambar: 'assets/images/gembira_loka.jpg',
+      gambarDetail: 'assets/detail/gembira_detail.jpg',
   ),
 
   const ObjekWisata(
@@ -80,14 +93,21 @@ final List<ObjekWisata> daftarWisata = [
       tiketAnak: 80000,
       kuotaHarian: 1500,
       gambar: 'assets/images/museum_nasional.jpg',
+      gambarDetail: 'assets/detail/nasional_detail.jpg',
   ),
 
   const ObjekWisata(
-      namaObjek: 'Tumpak Sewu',
-      jenis: 'Air Terjun',
-      tiketDewasa: 85000,
-      tiketAnak: 80000,
-      kuotaHarian: 100,
-      gambar: 'assets/images/tumpak_sewu.jpg',
+      namaObjek: 'Museum Angkut',
+      jenis: 'Museum',
+      tiketDewasa: 110000,
+      tiketAnak: 110000,
+      kuotaHarian: 75,
+      gambar: 'assets/images/museum_angkut.jpg',
+      gambarDetail: 'assets/detail/angkut_detail.jpg',
+      galeriGambar: [
+        'assets/galeri/angkut_galeri1.jpg',
+        'assets/galeri/angkut_galeri2.jpg',
+        'assets/galeri/angkut_galeri3.jpg',
+      ]
   ),
 ];

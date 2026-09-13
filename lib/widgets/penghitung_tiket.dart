@@ -60,6 +60,9 @@ class _PenghitungTiketState  extends State<PenghitungTiket> {
           onTambah: () => _ubahDewasa(1),
           onKurang: () => _ubahDewasa(-1),
         ),
+
+        const SizedBox(height: 7),
+
         _BarisPenghitung(
           label: 'Anak',
           nilai :  _jumlahAnak,
@@ -76,6 +79,7 @@ class _PenghitungTiketState  extends State<PenghitungTiket> {
           fontWeight: FontWeight.w600,
         ),
       ),
+      const SizedBox(height: 10),
       Text(
         'Total: ${formatRupiah(totalAkhir)}',
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
@@ -121,14 +125,16 @@ class _BarisPenghitung extends StatelessWidget {
           child: Text(label, style: const TextStyle(fontSize: 12)),
         ),
         _TombolBulat(icon: Icons.remove, onTap: onKurang),
+        const SizedBox(width: 8),
         SizedBox(
-          width: 36,
+          width: 24,
           child: Text(
             '$nilai',
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ),
+        const SizedBox(width: 8),
         _TombolBulat(icon: Icons.add, onTap: onTambah),
       ],
     );
