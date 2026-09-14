@@ -30,16 +30,14 @@ class _HomePageState extends State<HomePage> {
   String _urutanDipilih = 'A-Z';
   final Map<String, int> _tiketDipilih = {};
 
-  int get _totalTiketTersisa {
-    int totalTiket = 0;
-
-    for (final objek in daftarWisata) {
-      totalTiket += objek.kuotaHarian;
-      totalTiket -= _tiketDipilih[objek.namaObjek] ?? 0;
-    }
-
-    return totalTiket;
+  int _hitungTiketTersisa(List<ObjekWisata> daftar) {
+  int totalTiket = 0;
+  for (final objek in daftar) {
+    totalTiket += objek.kuotaHarian;
+    totalTiket -= _tiketDipilih[objek.namaObjek] ?? 0;
   }
+  return totalTiket;
+}
 
   @override
   void initState() {
@@ -130,6 +128,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final hasil = _hasilTersaring;
     final ringkasan = hitungRingkasan(hasil);
+    final totalTiketTersisa = _hitungTiketTersisa(hasil);
 
     return Scaffold(
       appBar: AppBar(
@@ -404,7 +403,7 @@ class _HomePageState extends State<HomePage> {
 
                   Flexible(
                     child: Text(
-                      'Total tiket: $_totalTiketTersisa',
+                      'Total tiket: $totalTiketTersisa',
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         fontSize: 12.5,
@@ -442,7 +441,7 @@ class _HomePageState extends State<HomePage> {
                       );
 
                       const tinggiKontenLain =
-                          215.0;
+                          240.0;
 
                       final tinggiKartu =
                           tinggiGambar +

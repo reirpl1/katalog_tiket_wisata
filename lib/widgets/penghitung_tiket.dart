@@ -116,15 +116,59 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
             ),
           ),
 
-        const SizedBox(height: 10),
+          const SizedBox(height: 6),
+          //sisa kuota
+          Builder(
+            builder: (context) {
+              final sisaKuota = widget.objek.kuotaHarian - totalOrang;
+              final bool hampirPenuh = sisaKuota <= 10;
 
-        Text(
-          'Total: ${formatRupiah(totalAkhir)}',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
+               return Text(
+                'Sisa kuota: $sisaKuota tiket',
+                style: GoogleFonts.poppins(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: hampirPenuh
+                      ? Colors.red.shade700
+                      : Colors.grey.shade700,
+                ),
+              );
+            },
           ),
-        ),
+
+        const SizedBox(height: 10),
+         Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 9,
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xFF14213D),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+                Text(
+                  formatRupiah(totalAkhir),
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+         ),
 
         if (_pesanPeringatan != null)
           Padding(
@@ -163,7 +207,7 @@ class _BarisPenghitung extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 58,
+          width: 52,
           child: Text(
             label,
             style: GoogleFonts.poppins(
