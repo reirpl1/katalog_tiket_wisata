@@ -459,7 +459,7 @@ class _HomePageState extends State<HomePage> {
                         padding:
                             const EdgeInsets.fromLTRB(
                           16,
-                          4,
+                          12,
                           16,
                           4,
                         ),
