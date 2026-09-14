@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../models/objek_wisata.dart';
 import '../utils/aturan_tiket.dart';
 import '../utils/format_rupiah.dart';
 
 class PenghitungTiket extends StatefulWidget {
   final ObjekWisata objek;
-
-  // Memberi tahu parent kalau jumlah tiket berubah.
   final ValueChanged<int> onJumlahTiketBerubah;
 
   const PenghitungTiket({
@@ -23,7 +22,17 @@ class PenghitungTiket extends StatefulWidget {
 class _PenghitungTiketState extends State<PenghitungTiket> {
   int _jumlahDewasa = 0;
   int _jumlahAnak = 0;
+
   String? _pesanPeringatan;
+
+  int get _totalOrang => _jumlahDewasa + _jumlahAnak;
+
+  int get _sisaKuota {
+    final sisa = widget.objek.kuotaHarian - _totalOrang;
+    return sisa < 0 ? 0 : sisa;
+  }
+
+  bool get _bolehTambah => _sisaKuota > 0;
 
   void _ubahDewasa(int delta) {
     _prosesPerubahan(deltaDewasa: delta);
@@ -40,39 +49,43 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
     final calonDewasa = _jumlahDewasa + deltaDewasa;
     final calonAnak = _jumlahAnak + deltaAnak;
 
-    // Jangan sampai jumlah tiket menjadi negatif.
+    // Tidak boleh sampai jumlah menjadi negatif.
     if (calonDewasa < 0 || calonAnak < 0) {
       return;
     }
 
     final totalCalon = calonDewasa + calonAnak;
 
-    // Cek kuota maksimal wisata.
-    if (!masihMuatKuota(
-      totalCalon,
-      widget.objek.kuotaHarian,
-    )) {
+    // Kalau menambah tetapi kuota sudah habis,
+    // jangan mengubah jumlah tiket.
+    if (totalCalon > widget.objek.kuotaHarian) {
       setState(() {
         _pesanPeringatan =
             'Kuota harian ${widget.objek.namaObjek} sudah penuh '
-            '(maks ${widget.objek.kuotaHarian} orang)';
+            '(maks. ${widget.objek.kuotaHarian} orang).';
       });
       return;
     }
 
     setState(() {
-      _pesanPeringatan = null;
       _jumlahDewasa = calonDewasa;
       _jumlahAnak = calonAnak;
+
+      // Tampilkan peringatan ketika kuota tepat habis.
+      if (totalCalon == widget.objek.kuotaHarian) {
+        _pesanPeringatan =
+            'Kuota penuh. Tombol + dinonaktifkan.';
+      } else {
+        _pesanPeringatan = null;
+      }
     });
 
-    // Kirim jumlah tiket yang sedang dipilih ke HomePage.
     widget.onJumlahTiketBerubah(totalCalon);
   }
 
   @override
   Widget build(BuildContext context) {
-    final totalOrang = _jumlahDewasa + _jumlahAnak;
+    final totalOrang = _totalOrang;
 
     final subtotal = hitungTotalTiket(
       jumlahDewasa: _jumlahDewasa,
@@ -91,6 +104,8 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
         _BarisPenghitung(
           label: 'Dewasa',
           nilai: _jumlahDewasa,
+          bolehTambah: _bolehTambah,
+          bolehKurang: _jumlahDewasa > 0,
           onTambah: () => _ubahDewasa(1),
           onKurang: () => _ubahDewasa(-1),
         ),
@@ -100,6 +115,8 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
         _BarisPenghitung(
           label: 'Anak',
           nilai: _jumlahAnak,
+          bolehTambah: _bolehTambah,
+          bolehKurang: _jumlahAnak > 0,
           onTambah: () => _ubahAnak(1),
           onKurang: () => _ubahAnak(-1),
         ),
@@ -116,74 +133,43 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
             ),
           ),
 
-          const SizedBox(height: 6),
-          //sisa kuota
-          Builder(
-            builder: (context) {
-              final sisaKuota = widget.objek.kuotaHarian - totalOrang;
-              final bool hampirPenuh = sisaKuota <= 10;
+        const SizedBox(height: 4),
 
-               return Text(
-                'Sisa kuota: $sisaKuota tiket',
-                style: GoogleFonts.poppins(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: hampirPenuh
-                      ? Colors.red.shade700
-                      : Colors.grey.shade700,
-                ),
-              );
-            },
+        Text(
+          'Sisa kuota: $_sisaKuota tiket',
+          style: GoogleFonts.poppins(
+            fontSize: 11,
+            color: _sisaKuota == 0
+                ? Colors.red.shade700
+                : Colors.grey.shade700,
+            fontWeight: FontWeight.w600,
           ),
+        ),
 
-        const SizedBox(height: 10),
-         Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 9,
-            ),
-            decoration: BoxDecoration(
-              color: const Color(0xFF14213D),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Total',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13,
-                  ),
-                ),
-                Text(
-                  formatRupiah(totalAkhir),
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ],
-            ),
-         ),
+        const SizedBox(height: 8),
+
+        Text(
+          'Total: ${formatRupiah(totalAkhir)}',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
 
         if (_pesanPeringatan != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Text(
-              _pesanPeringatan!,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(
-                fontSize: 11,
-                color: Colors.red.shade700,
-                fontWeight: FontWeight.w600,
-              ),
+        Padding(
+          padding: const EdgeInsets.only(top: 3),
+          child: Text(
+            'Kuota penuh. Tombol + dinonaktifkan.',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.poppins(
+              fontSize: 10.5,
+              color: Colors.red.shade700,
+              fontWeight: FontWeight.w600,
             ),
           ),
+        ),
       ],
     );
   }
@@ -192,12 +178,16 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
 class _BarisPenghitung extends StatelessWidget {
   final String label;
   final int nilai;
+  final bool bolehTambah;
+  final bool bolehKurang;
   final VoidCallback onTambah;
   final VoidCallback onKurang;
 
   const _BarisPenghitung({
     required this.label,
     required this.nilai,
+    required this.bolehTambah,
+    required this.bolehKurang,
     required this.onTambah,
     required this.onKurang,
   });
@@ -207,7 +197,7 @@ class _BarisPenghitung extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 52,
+          width: 58,
           child: Text(
             label,
             style: GoogleFonts.poppins(
@@ -220,6 +210,7 @@ class _BarisPenghitung extends StatelessWidget {
 
         _TombolBulat(
           icon: Icons.remove,
+          aktif: bolehKurang,
           onTap: onKurang,
         ),
 
@@ -240,6 +231,7 @@ class _BarisPenghitung extends StatelessWidget {
 
         _TombolBulat(
           icon: Icons.add,
+          aktif: bolehTambah,
           onTap: onTambah,
         ),
       ],
@@ -249,30 +241,36 @@ class _BarisPenghitung extends StatelessWidget {
 
 class _TombolBulat extends StatelessWidget {
   final IconData icon;
+  final bool aktif;
   final VoidCallback onTap;
 
   const _TombolBulat({
     required this.icon,
+    required this.aktif,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: aktif ? onTap : null,
       borderRadius: BorderRadius.circular(20),
       child: Container(
         width: 22,
         height: 22,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: const Color(0xFFF1E4CB),
+          color: aktif
+              ? const Color(0xFFF1E4CB)
+              : Colors.grey.shade200,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
           icon,
           size: 14,
-          color: const Color(0xFF6E3B4C),
+          color: aktif
+              ? const Color(0xFF6E3B4C)
+              : Colors.grey.shade400,
         ),
       ),
     );

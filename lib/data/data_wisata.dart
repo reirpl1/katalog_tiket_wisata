@@ -82,7 +82,7 @@ final List<ObjekWisata> daftarWisata = [
       jenis: 'Hutan',
       tiketDewasa: 25000,
       tiketAnak: 23000,
-      kuotaHarian: 1000,
+      kuotaHarian: 200,
       gambar: 'assets/images/hutan_pinus.jpg',
       galeriGambar: [
         'assets/galeri/pinus_galeri1.jpg',
