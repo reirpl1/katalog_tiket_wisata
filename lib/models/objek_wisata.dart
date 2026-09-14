@@ -5,26 +5,24 @@ class ObjekWisata {
   final String jenis;
   final int tiketDewasa;
   final int tiketAnak;
-  final int kuotaHarian;
+  int kuotaHarian;
   final String gambar;
-  final String? gambarDetail;
   final List<String> galeriGambar;
 
-  const ObjekWisata({
+    ObjekWisata({
     required this.namaObjek,
     required this.jenis,
     required this.tiketDewasa,
     required this.tiketAnak,
     required this.kuotaHarian,
     required this.gambar,
-    this.gambarDetail,
     this.galeriGambar = const [],
   });
 
-  String get gambarUntukDetail => gambarDetail ?? gambar;
+  String get gambarUntukDetail => galeriGambar.isNotEmpty || galeriGambar.isNotEmpty ? galeriGambar.first : gambar;
 
   String ringkasanTarif() {
-    return 'Dewasa ${formatRupiah(tiketDewasa)} Anak ${formatRupiah(tiketAnak)}';
+    return 'Dewasa ${formatRupiah(tiketDewasa)}, Anak ${formatRupiah(tiketAnak)}';
   }
 }
 

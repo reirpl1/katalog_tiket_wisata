@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../data/data_wisata.dart';
 import '../models/objek_wisata.dart';
 import '../utils/format_rupiah.dart';
@@ -19,21 +20,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final TextEditingController _controllerPencarian;
+
   String _kataKunci = '';
 
-  // F2: kategori yang sedang dipilih. null artinya "Semua".
+  //F2: kategori yang dipilih
   String? _kategoriTerpilih;
 
-  // F1: arah urutan nama. true = A-Z, false = Z-A.
-  bool _urutNaik = true;
+  //pilihan pengurutan
+  String _urutanDipilih = 'A-Z';
+  final Map<String, int> _tiketDipilih = {};
+
+  int get _totalTiketTersisa {
+    int totalTiket = 0;
+
+    for (final objek in daftarWisata) {
+      totalTiket += objek.kuotaHarian;
+      totalTiket -= _tiketDipilih[objek.namaObjek] ?? 0;
+    }
+
+    return totalTiket;
+  }
 
   @override
   void initState() {
     super.initState();
+
     _controllerPencarian = TextEditingController();
+
     _controllerPencarian.addListener(() {
       setState(() {
-        _kataKunci = _controllerPencarian.text.trim().toLowerCase();
+        _kataKunci = 
+          _controllerPencarian.text.trim().toLowerCase();
       });
     });
   }
@@ -45,24 +62,40 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<String> get _daftarKategori {
-    final kategoriUnik = daftarWisata.map((objek) => objek.jenis).toSet();
-    return kategoriUnik.toList();
+    final kategoriUnik =
+      daftarWisata.map((objek) => objek.jenis).toSet();
+
+      return kategoriUnik.toList();
   }
 
   List<ObjekWisata> get _hasilTersaring {
     var hasil = daftarWisata.where((objek) {
-      final cocokKataKunci = _kataKunci.isEmpty ||
+      final cocokKataKunci =
+          _kataKunci.isEmpty ||
           objek.namaObjek.toLowerCase().contains(_kataKunci) ||
           objek.jenis.toLowerCase().contains(_kataKunci);
+
       final cocokKategori =
-          _kategoriTerpilih == null || objek.jenis == _kategoriTerpilih;
+          _kategoriTerpilih == null ||
+          objek.jenis == _kategoriTerpilih;
+
       return cocokKataKunci && cocokKategori;
     }).toList();
 
-    // F1: urutkan nama sesuai arah yang dipilih.
-    hasil.sort((a, b) => _urutNaik
-        ? a.namaObjek.compareTo(b.namaObjek)
-        : b.namaObjek.compareTo(a.namaObjek));
+    //F1: Pengurutan sesuai pilihan filter
+   if (_urutanDipilih == 'A-Z') {
+      hasil.sort(
+        (a, b) => a.namaObjek.compareTo(b.namaObjek),
+      );
+    } else if (_urutanDipilih == 'Harga tiket termurah') {
+      hasil.sort(
+        (a, b) => a.tiketDewasa.compareTo(b.tiketDewasa),
+      );
+    } else if (_urutanDipilih == 'Harga tiket termahal') {
+      hasil.sort(
+        (a, b) => b.tiketDewasa.compareTo(a.tiketDewasa),
+      );
+    }
 
     return hasil;
   }
@@ -73,20 +106,24 @@ class _HomePageState extends State<HomePage> {
     return 1;
   }
 
-  // menghitung tinggi foto yang proporsional (rasio 16:9) supaya
-  // gambar tidak gepeng diukuran layar manapun
+  double _hitungTinggiGambar(
+    double lebarLayar,
+    int jumlahKolom,
+  ) {
+    const paddingHorizontalGrid = 32.0;
+    const spasiAntarKolom = 12.0;
+    const paddingDalamKartu = 20.0;
 
-  double  _hitungTinggiGambar(double lebarLayar, int jumlahKolom) {
-    const paddingHorizontalGrid = 32.0; // padding kiri kanan gridView (16+16)
-    const spasiAntarKolom = 12.0; // spasi antar kolom
-    const paddingDalamKartu = 20.0; // padding  kiri kanan gridCard(10+10)
+    final totalSpasi =
+        spasiAntarKolom * (jumlahKolom -1);
 
-    final totalSpasi = spasiAntarKolom * (jumlahKolom - 1);
-    final lebarKartu = (lebarLayar - paddingHorizontalGrid - totalSpasi) / jumlahKolom;
-    final lebarGambar = lebarKartu - paddingDalamKartu;
+    final lebarKartu =
+        (lebarLayar - paddingHorizontalGrid - totalSpasi) / jumlahKolom;
+
+    final lebarGambar =
+        lebarKartu - paddingDalamKartu;
 
     return (lebarGambar * 0.65).clamp(220.0, 300.0);
-    
   }
 
   @override
@@ -96,167 +133,388 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Jelajah Nusantara — Katalog Wisata',
-          style: TextStyle(color: Colors.white)),
+          title: Text(
+          'Jelajah Nusantara',
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         backgroundColor: _navy,
-        foregroundColor: _sand,
+        foregroundColor: Colors.white, // diganti sand bs
       ),
-      body: Column(
+
+     body: Column(
         children: [
+
+          // =========================
+          // SEARCH
+          // =========================
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            padding:
+                const EdgeInsets.fromLTRB(16, 12, 16, 8),
             child: TextField(
               controller: _controllerPencarian,
               decoration: InputDecoration(
-                hintText: 'Cari objek wisata atau jenisnya...',
-                prefixIcon: const Icon(Icons.search),
+                hintText:
+                    'Cari objek wisata atau jenisnya...',
+                prefixIcon:
+                    const Icon(Icons.search),
                 filled: true,
                 fillColor: _sand,
+
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: _navy.withValues(alpha: 0.35), width: 1),
+                  borderRadius:
+                      BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: _navy.withValues(alpha: 0.35),
+                    width: 1,
+                  ),
                 ),
+
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: _navy.withValues(alpha: 0.35), width: 1),
+                  borderRadius:
+                      BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: _navy.withValues(alpha: 0.35),
+                    width: 1,
+                  ),
                 ),
+
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: _navy, width: 1.5)
-                )
+                  borderRadius:
+                      BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: _navy,
+                    width: 1.5,
+                  ),
+                ),
               ),
             ),
           ),
 
-          // F1 + F2: baris kategori (kiri) dan tombol urutkan (kanan).
+          // =========================
+          // KATEGORI + FILTER
+          // =========================
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
+                // =========================
+                // KATEGORI WISATA
+                // =========================
                 Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
+                  child: Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: [
+
+                      _ChipKategori(
+                        label: 'Semua',
+                        terpilih: _kategoriTerpilih == null,
+                        onTap: () {
+                          setState(() {
+                            _kategoriTerpilih = null;
+                          });
+                        },
+                      ),
+
+                      for (final kategori in _daftarKategori)
                         _ChipKategori(
-                          label: 'Semua',
-                          terpilih: _kategoriTerpilih == null,
-                          onTap: () => setState(() => _kategoriTerpilih = null),
+                          label: kategori,
+                          terpilih:
+                              _kategoriTerpilih == kategori,
+                          onTap: () {
+                            setState(() {
+                              _kategoriTerpilih = kategori;
+                            });
+                          },
                         ),
-                        for (final kategori in _daftarKategori)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 6),
-                            child: _ChipKategori(
-                              label: kategori,
-                              terpilih: _kategoriTerpilih == kategori,
-                              onTap: () =>
-                                  setState(() => _kategoriTerpilih = kategori),
-                            ),
-                          ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
-                IconButton(
-                  tooltip: _urutNaik ? 'Urut A ke Z' : 'Urut Z ke A',
-                  onPressed: () => setState(() => _urutNaik = !_urutNaik),
-                  icon: Icon(
-                    _urutNaik
-                        ? Icons.arrow_downward_rounded
-                        : Icons.arrow_upward_rounded,
-                    color: _navy
+
+                const SizedBox(width: 8),
+
+                // =========================
+                // TOMBOL FILTER
+                // =========================
+                PopupMenuButton<String>(
+                  tooltip: 'Urutkan',
+
+                  icon: const Icon(
+                    Icons.filter_list_rounded,
+                    color: _navy,
                   ),
+
+                  onSelected: (String pilihan) {
+                    setState(() {
+                      _urutanDipilih = pilihan;
+                    });
+                  },
+
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem<String>(
+                        value: 'A-Z',
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.sort_by_alpha_rounded,
+                              color: _urutanDipilih == 'A-Z'
+                                  ? _navy
+                                  : Colors.grey,
+                            ),
+
+                            const SizedBox(width: 10),
+
+                            const Text('A-Z'),
+
+                            const Spacer(),
+
+                            if (_urutanDipilih == 'A-Z')
+                              const Icon(
+                                Icons.check,
+                                color: _navy,
+                                size: 20,
+                              ),
+                          ],
+                        ),
+                      ),
+
+                      PopupMenuItem<String>(
+                        value: 'Harga tiket termurah',
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_downward_rounded,
+                              color:
+                                  _urutanDipilih ==
+                                          'Harga tiket termurah'
+                                      ? _navy
+                                      : Colors.grey,
+                            ),
+
+                            const SizedBox(width: 10),
+
+                            const Text(
+                              'Harga tiket termurah',
+                            ),
+
+                            const Spacer(),
+
+                            if (_urutanDipilih ==
+                                'Harga tiket termurah')
+                              const Icon(
+                                Icons.check,
+                                color: _navy,
+                                size: 20,
+                              ),
+                          ],
+                        ),
+                      ),
+
+                      PopupMenuItem<String>(
+                        value: 'Harga tiket termahal',
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_upward_rounded,
+                              color:
+                                  _urutanDipilih ==
+                                          'Harga tiket termahal'
+                                      ? _navy
+                                      : Colors.grey,
+                            ),
+
+                            const SizedBox(width: 10),
+
+                            const Text(
+                              'Harga tiket termahal',
+                            ),
+
+                            const Spacer(),
+
+                            if (_urutanDipilih ==
+                                'Harga tiket termahal')
+                              const Icon(
+                                Icons.check,
+                                color: _navy,
+                                size: 20,
+                              ),
+                          ],
+                        ),
+                      ),
+                    ];
+                  },
                 ),
               ],
             ),
           ),
 
-          // F3: ringkasan atas, dua angka dari perulangan, ikut berubah
-          // saat pencarian/kategori berubah.
+          // =========================
+          // RINGKASAN
+          // =========================
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+            padding:
+                const EdgeInsets.fromLTRB(16, 8, 16, 4),
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              decoration: BoxDecoration(
-                color: _plum.withValues(alpha: 0.18),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: _plum.withValues(alpha: 0.45)),
+
+              padding:
+                  const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 10,
               ),
+
+              decoration: BoxDecoration(
+                color:
+                    _plum.withValues(alpha: 0.18),
+
+                borderRadius:
+                    BorderRadius.circular(10),
+
+                border: Border.all(
+                  color:
+                      _plum.withValues(alpha: 0.45),
+                ),
+              ),
+
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+
                 children: [
+
                   Flexible(
                     child: Text(
                       '${ringkasan.totalObjek} objek ditampilkan',
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5),
-                    overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.5,
+                      ),
+                      overflow:
+                          TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                 const SizedBox(width: 8),
-                 Flexible(
-                  child: Text(
-                    'Rata-rata: ${formatRupiah(ringkasan.hargaTermurah)} / ${formatRupiah(ringkasan.hargaTermahal)}',
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5),
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.end,
+
+                  const SizedBox(width: 8),
+
+                  Flexible(
+                    child: Text(
+                      'Total tiket: $_totalTiketTersisa',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.5,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                    ),
                   ),
-                 ),
                 ],
               ),
             ),
           ),
 
-          // F4: tampilan kosong jika hasil filter tidak ada, F5 lewat
-          // onLihatRincian di setiap kartu.
+          // =========================
+          // DAFTAR WISATA
+          // =========================
           Expanded(
             child: hasil.isEmpty
-                ? _TampilanKosong(kataKunci: _kataKunci)
+                ? _TampilanKosong(
+                    kataKunci: _kataKunci,
+                  )
                 : LayoutBuilder(
-                  builder: (context, constraints) {
-                    final jumlahKolom =
-                    _tentukanJumlahKolom(constraints.maxWidth);
-                    final tinggiGambar =
-                    _hitungTinggiGambar(constraints.maxWidth, jumlahKolom);
-                    const tinggiKontenLain = 215.0; //nama+jenis+harga+counter+total
-                    final tinggiKartu = tinggiGambar + tinggiKontenLain;
+                    builder:
+                        (context, constraints) {
 
-                    return GridView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                      itemCount: hasil.length,
-                      gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: jumlahKolom,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        mainAxisExtent: tinggiKartu,
-                      ),
-                      itemBuilder: (context, index) {
-                        final objek = hasil[index];
-                        return ObjekWisataCard(
-                          data: objek,
-                          tinggiGambar: tinggiGambar,
-                          onLihatRincian: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:(_) =>
-                                  DetailWisataPage(data: objek),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
+                      final jumlahKolom =
+                          _tentukanJumlahKolom(
+                        constraints.maxWidth,
+                      );
+
+                      final tinggiGambar =
+                          _hitungTinggiGambar(
+                        constraints.maxWidth,
+                        jumlahKolom,
+                      );
+
+                      const tinggiKontenLain =
+                          215.0;
+
+                      final tinggiKartu =
+                          tinggiGambar +
+                              tinggiKontenLain;
+
+                      return GridView.builder(
+                        padding:
+                            const EdgeInsets.fromLTRB(
+                          16,
+                          4,
+                          16,
+                          4,
+                        ),
+
+                        itemCount: hasil.length,
+
+                        gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              jumlahKolom,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          mainAxisExtent:
+                              tinggiKartu,
+                        ),
+
+                        itemBuilder:
+                            (context, index) {
+
+                          final objek =
+                              hasil[index];
+
+                          return ObjekWisataCard(
+                            data: objek,
+
+                            tinggiGambar: tinggiGambar,
+
+                            onJumlahTiketBerubah: (jumlah) {
+                              setState(() {
+                                if (jumlah == 0) {
+                                  _tiketDipilih.remove(objek.namaObjek);
+                                } else {
+                                  _tiketDipilih[objek.namaObjek] = jumlah;
+                                }
+                              });
+                            },
+
+                            onLihatRincian: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => DetailWisataPage(
+                                    data: objek,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
           ),
         ],
       ),
     );
   }
 }
+
+// ======================================================
+// CHIP KATEGORI
+// ======================================================
 
 class _ChipKategori extends StatelessWidget {
   final String label;
@@ -272,15 +530,24 @@ class _ChipKategori extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-      label: Text(label, style: const TextStyle(fontSize: 12)),
+      label: Text(label), // tanpa style eksplisit di sini
+
       selected: terpilih,
+
       onSelected: (_) => onTap(),
+
       selectedColor: _navy,
+
       backgroundColor: _sand,
-      labelStyle: TextStyle(
+
+      labelStyle: GoogleFonts.poppins(
         color: terpilih ? Colors.white : const Color(0xFF2C2A28),
         fontWeight: FontWeight.w600,
+        fontSize: 12,
       ),
+
+      labelPadding: const EdgeInsets.symmetric(horizontal: 8), // tambahan ruang biar tidak mepet
+
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: BorderSide.none,
@@ -289,31 +556,59 @@ class _ChipKategori extends StatelessWidget {
   }
 }
 
-// F4: tampilan khusus saat hasil pencarian/filter kosong.
+// ======================================================
+// TAMPILAN KOSONG
+// ======================================================
+
 class _TampilanKosong extends StatelessWidget {
   final String kataKunci;
 
-  const _TampilanKosong({required this.kataKunci});
+  const _TampilanKosong({
+    required this.kataKunci,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize:
+            MainAxisSize.min,
+
         children: [
-          Icon(Icons.travel_explore, size: 56, color: _plum.withValues(alpha: 0.5)),
+
+          Icon(
+            Icons.travel_explore,
+            size: 56,
+            color:
+                _plum.withValues(alpha: 0.5),
+          ),
+
           const SizedBox(height: 12),
+
           Text(
             kataKunci.isEmpty
                 ? 'Tidak ada objek wisata pada kategori ini.'
                 : 'Objek wisata "$kataKunci" tidak ditemukan.',
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 13, color: Color(0xFF2C2A28)),
+
+            textAlign:
+                TextAlign.center,
+
+            style: const TextStyle(
+              fontSize: 13,
+              color:
+                  Color(0xFF2C2A28),
+            ),
           ),
+
           const SizedBox(height: 4),
+
           const Text(
             'Coba ubah kata kunci atau kategori.',
-            style: TextStyle(fontSize: 11, color: Colors.grey),
+
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),

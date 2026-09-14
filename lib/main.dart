@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'pages/home_page.dart';
 
 void main(){
@@ -19,6 +20,7 @@ class AplikasiKatalogWisata extends StatelessWidget {
       title: 'Katalog Wisata & Perhitungan Tiket',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: GoogleFonts.poppins().fontFamily,
         colorScheme: ColorScheme.fromSeed(
           seedColor: deepTeal,
           primary: deepTeal,
@@ -26,7 +28,7 @@ class AplikasiKatalogWisata extends StatelessWidget {
         ),
         scaffoldBackgroundColor: sand,
         useMaterial3: true,
-        textTheme: const TextTheme().apply(bodyColor: charcoal),
+        textTheme: GoogleFonts.poppinsTextTheme().apply(bodyColor: charcoal),
         cardTheme: const CardThemeData(
           surfaceTintColor: Colors.transparent,
         ),

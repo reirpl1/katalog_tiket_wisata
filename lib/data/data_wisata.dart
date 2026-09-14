@@ -1,7 +1,7 @@
 import '../models/objek_wisata.dart';
 
 final List<ObjekWisata> daftarWisata = [
-  const ObjekWisata(
+  ObjekWisata(
     namaObjek: 'Raja Ampat',
     jenis: 'Pantai & Laut',
     tiketDewasa: 100000,
@@ -15,7 +15,7 @@ final List<ObjekWisata> daftarWisata = [
     ],
  ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Candi Borobudur',
       jenis: 'Candi',
       tiketDewasa: 80000,
@@ -29,7 +29,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Goa Pindul',
       jenis: 'Goa',
       tiketDewasa: 50000,
@@ -43,7 +43,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Pantai Wediombo',
       jenis: 'Pantai & Laut',
       tiketDewasa: 20000,
@@ -57,7 +57,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Gunung Bromo',
       jenis: 'Gunung',
       tiketDewasa: 80000,
@@ -71,7 +71,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Hutan Pinus Embun Pagi',
       jenis: 'Hutan',
       tiketDewasa: 25000,
@@ -85,7 +85,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Pantai Timang',
       jenis: 'Pantai & Laut',
       tiketDewasa: 60000,
@@ -99,7 +99,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Gembira Loka',
       jenis: 'Kebun Binatang',
       tiketDewasa: 85000,
@@ -113,7 +113,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Museum Nasional',
       jenis: 'Museum',
       tiketDewasa: 85000,
@@ -127,7 +127,7 @@ final List<ObjekWisata> daftarWisata = [
       ]
   ),
 
-  const ObjekWisata(
+   ObjekWisata(
       namaObjek: 'Museum Angkut',
       jenis: 'Museum',
       tiketDewasa: 110000,

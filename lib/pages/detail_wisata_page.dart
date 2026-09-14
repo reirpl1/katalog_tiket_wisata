@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/objek_wisata.dart';
 import '../utils/format_rupiah.dart';
@@ -36,7 +36,7 @@ class _DetailWisataPageState extends State<DetailWisataPage> {
       ?widget.data.galeriGambar
       : [widget.data.gambarUntukDetail];
 
-      _pageController = PageController(viewportFraction: 0.78);
+      _pageController = PageController(viewportFraction: 1.0);
       _pageController.addListener(() {
         setState(() {
           _currentPage = _pageController.page ?? 0;
@@ -79,7 +79,7 @@ class _DetailWisataPageState extends State<DetailWisataPage> {
       appBar: AppBar(
         title: Text(
           data.namaObjek,
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.poppins(color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: _navy,
@@ -338,7 +338,7 @@ class _DetailWisataPageState extends State<DetailWisataPage> {
                                     'Ingat: rombongan dengan 20 orang atau lebih '
                                     'otomatis mendapat potongan harga 15% pada '
                                     'halaman utama',
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 11.5,
                                       color: Colors.grey.shade800,
                                     ),
@@ -361,12 +361,6 @@ class _DetailWisataPageState extends State<DetailWisataPage> {
   }
 }
  
-// ========================================
-// FISIKA SCROLL BIAR ADA EFEK "MANTUL"
-// SpringDescription dengan damping ratio < 1
-// bikin swipe/snap-nya overshoot dikit lalu balik,
-// itu yang bikin kesan lucu/mantul di ujung slide.
-// ========================================
 class _BouncyPageScrollPhysics extends PageScrollPhysics {
   const _BouncyPageScrollPhysics({super.parent});
  
@@ -417,7 +411,7 @@ class _BarisRincian extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 11,
                     color: Colors.grey.shade600,
                     fontWeight: FontWeight.w600,
@@ -426,7 +420,7 @@ class _BarisRincian extends StatelessWidget {
                 const SizedBox(height: 1),
                 Text(
                   nilai,
-                  style: const TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),

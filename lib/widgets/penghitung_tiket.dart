@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/objek_wisata.dart';
 import '../utils/aturan_tiket.dart';
 import '../utils/format_rupiah.dart';
@@ -6,47 +7,80 @@ import '../utils/format_rupiah.dart';
 class PenghitungTiket extends StatefulWidget {
   final ObjekWisata objek;
 
-  const PenghitungTiket({super.key, required this.objek});
+  // Memberi tahu parent kalau jumlah tiket berubah.
+  final ValueChanged<int> onJumlahTiketBerubah;
+
+  const PenghitungTiket({
+    super.key,
+    required this.objek,
+    required this.onJumlahTiketBerubah,
+  });
 
   @override
   State<PenghitungTiket> createState() => _PenghitungTiketState();
 }
 
-class _PenghitungTiketState  extends State<PenghitungTiket> {
+class _PenghitungTiketState extends State<PenghitungTiket> {
   int _jumlahDewasa = 0;
   int _jumlahAnak = 0;
   String? _pesanPeringatan;
 
-  void _ubahDewasa(int delta) => _prosesPerubahan(deltaDewasa: delta);
-  void _ubahAnak(int delta) => _prosesPerubahan(deltaAnak: delta);
+  void _ubahDewasa(int delta) {
+    _prosesPerubahan(deltaDewasa: delta);
+  }
 
-  void _prosesPerubahan({int deltaDewasa = 0, int deltaAnak = 0}) {
+  void _ubahAnak(int delta) {
+    _prosesPerubahan(deltaAnak: delta);
+  }
+
+  void _prosesPerubahan({
+    int deltaDewasa = 0,
+    int deltaAnak = 0,
+  }) {
     final calonDewasa = _jumlahDewasa + deltaDewasa;
     final calonAnak = _jumlahAnak + deltaAnak;
 
+    // Jangan sampai jumlah tiket menjadi negatif.
+    if (calonDewasa < 0 || calonAnak < 0) {
+      return;
+    }
+
     final totalCalon = calonDewasa + calonAnak;
 
+    // Cek kuota maksimal wisata.
+    if (!masihMuatKuota(
+      totalCalon,
+      widget.objek.kuotaHarian,
+    )) {
+      setState(() {
+        _pesanPeringatan =
+            'Kuota harian ${widget.objek.namaObjek} sudah penuh '
+            '(maks ${widget.objek.kuotaHarian} orang)';
+      });
+      return;
+    }
+
     setState(() {
-      if (!masihMuatKuota(totalCalon, widget.objek.kuotaHarian)) {
-        _pesanPeringatan = 
-          'Kuota harian ${widget.objek.namaObjek} sudah penuh (maks ${widget.objek.kuotaHarian} orang)';
-          return;
-      }
-     _pesanPeringatan = null;
-     _jumlahDewasa = calonDewasa; 
-     _jumlahAnak = calonAnak; 
+      _pesanPeringatan = null;
+      _jumlahDewasa = calonDewasa;
+      _jumlahAnak = calonAnak;
     });
+
+    // Kirim jumlah tiket yang sedang dipilih ke HomePage.
+    widget.onJumlahTiketBerubah(totalCalon);
   }
 
   @override
   Widget build(BuildContext context) {
     final totalOrang = _jumlahDewasa + _jumlahAnak;
+
     final subtotal = hitungTotalTiket(
       jumlahDewasa: _jumlahDewasa,
       jumlahAnak: _jumlahAnak,
       hargaDewasa: widget.objek.tiketDewasa,
       hargaAnak: widget.objek.tiketAnak,
     );
+
     final diskon = hitungDiskon(totalOrang);
     final totalAkhir = terapkanDiskon(subtotal, diskon);
 
@@ -56,7 +90,7 @@ class _PenghitungTiketState  extends State<PenghitungTiket> {
       children: [
         _BarisPenghitung(
           label: 'Dewasa',
-          nilai :  _jumlahDewasa,
+          nilai: _jumlahDewasa,
           onTambah: () => _ubahDewasa(1),
           onKurang: () => _ubahDewasa(-1),
         ),
@@ -65,39 +99,47 @@ class _PenghitungTiketState  extends State<PenghitungTiket> {
 
         _BarisPenghitung(
           label: 'Anak',
-          nilai :  _jumlahAnak,
+          nilai: _jumlahAnak,
           onTambah: () => _ubahAnak(1),
           onKurang: () => _ubahAnak(-1),
         ),
+
         const SizedBox(height: 6),
+
         if (diskon > 0)
+          Text(
+            'Diskon rombongan 15% aktif',
+            style: GoogleFonts.poppins(
+              fontSize: 11,
+              color: Colors.green.shade700,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+
+        const SizedBox(height: 10),
+
         Text(
-          'Diskon rombongan 15% aktif',
-        style: TextStyle(
-          fontSize: 11,
-          color: Colors.green.shade700,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      const SizedBox(height: 10),
-      Text(
-        'Total: ${formatRupiah(totalAkhir)}',
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-      ),
-      if (_pesanPeringatan != null)
-      Padding(
-        padding: const EdgeInsets.only(top: 4),
-        child: Text(
-          _pesanPeringatan!,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 11,
-            color: Colors.red.shade700,
-            fontWeight: FontWeight.w600,
+          'Total: ${formatRupiah(totalAkhir)}',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
           ),
         ),
-      ),
+
+        if (_pesanPeringatan != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              _pesanPeringatan!,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.poppins(
+                fontSize: 11,
+                color: Colors.red.shade700,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -121,31 +163,54 @@ class _BarisPenghitung extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 48,
-          child: Text(label, style: const TextStyle(fontSize: 12)),
+          width: 58,
+          child: Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.visible,
+          ),
         ),
-        _TombolBulat(icon: Icons.remove, onTap: onKurang),
+
+        _TombolBulat(
+          icon: Icons.remove,
+          onTap: onKurang,
+        ),
+
         const SizedBox(width: 8),
+
         SizedBox(
           width: 24,
           child: Text(
             '$nilai',
             textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
+
         const SizedBox(width: 8),
-        _TombolBulat(icon: Icons.add, onTap: onTambah),
+
+        _TombolBulat(
+          icon: Icons.add,
+          onTap: onTambah,
+        ),
       ],
     );
   }
 }
 
-class _TombolBulat extends StatelessWidget  {
-  final  IconData icon;
+class _TombolBulat extends StatelessWidget {
+  final IconData icon;
   final VoidCallback onTap;
 
-  const _TombolBulat({required this.icon, required this.onTap});
+  const _TombolBulat({
+    required this.icon,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -153,16 +218,19 @@ class _TombolBulat extends StatelessWidget  {
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        width:22,
+        width: 22,
         height: 22,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: const Color(0xFFF1E4CB),  //sand
+          color: const Color(0xFFF1E4CB),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Icon(icon, size: 14, color: const Color(0xFF6E3B4C)), //plum
+        child: Icon(
+          icon,
+          size: 14,
+          color: const Color(0xFF6E3B4C),
+        ),
       ),
     );
   }
 }
-
