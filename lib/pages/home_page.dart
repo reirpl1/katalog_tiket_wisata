@@ -377,16 +377,8 @@ class _HomePageState extends State<HomePage> {
               ),
 
               decoration: BoxDecoration(
-                color:
-                    _plum.withValues(alpha: 0.18),
-
-                borderRadius:
-                    BorderRadius.circular(10),
-
-                border: Border.all(
-                  color:
-                      _plum.withValues(alpha: 0.45),
-                ),
+                color: _navy,
+                borderRadius: BorderRadius.circular(10),
               ),
 
               child: Row(
@@ -399,6 +391,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       '${ringkasan.totalObjek} objek ditampilkan',
                       style: const TextStyle(
+                        color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: 12.5,
                       ),
@@ -413,6 +406,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'Total tiket: $totalTiketTersisa',
                       style: GoogleFonts.poppins(
+                        color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: 12.5,
                       ),

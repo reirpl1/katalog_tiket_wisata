@@ -82,7 +82,7 @@ final List<ObjekWisata> daftarWisata = [
       jenis: 'Hutan',
       tiketDewasa: 25000,
       tiketAnak: 23000,
-      kuotaHarian: 200,
+      kuotaHarian: 50,
       gambar: 'assets/images/hutan_pinus.jpg',
       galeriGambar: [
         'assets/galeri/pinus_galeri1.jpg',
@@ -97,7 +97,7 @@ final List<ObjekWisata> daftarWisata = [
       jenis: 'Pantai & Laut',
       tiketDewasa: 60000,
       tiketAnak: 50000,
-      kuotaHarian: 700,
+      kuotaHarian: 100,
       gambar: 'assets/images/pantai_timang.jpg',
       galeriGambar: [
         'assets/galeri/timang_galeri1.jpg',
@@ -112,7 +112,7 @@ final List<ObjekWisata> daftarWisata = [
       jenis: 'Kebun Binatang',
       tiketDewasa: 85000,
       tiketAnak: 80000,
-      kuotaHarian: 900,
+      kuotaHarian: 300,
       gambar: 'assets/images/gembira_loka.jpg',
       galeriGambar: [
         'assets/galeri/loka_galeri1.jpg',
@@ -127,7 +127,7 @@ final List<ObjekWisata> daftarWisata = [
       jenis: 'Museum',
       tiketDewasa: 85000,
       tiketAnak: 80000,
-      kuotaHarian: 800,
+      kuotaHarian: 90,
       gambar: 'assets/images/museum_nasional.jpg',
       galeriGambar: [
         'assets/galeri/nasional_galeri1.jpg',

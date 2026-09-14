@@ -133,9 +133,7 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
             ),
           ),
 
-        const SizedBox(height: 4),
-
-        Text(
+          Text(
           'Sisa kuota: $_sisaKuota tiket',
           style: GoogleFonts.poppins(
             fontSize: 11,
@@ -148,17 +146,29 @@ class _PenghitungTiketState extends State<PenghitungTiket> {
 
         const SizedBox(height: 8),
 
-        Text(
+      Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 7,
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFF14213D),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
           'Total: ${formatRupiah(totalAkhir)}',
           style: GoogleFonts.poppins(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
         ),
+      ),
 
-        if (_pesanPeringatan != null)
+      if (_pesanPeringatan != null)
         Padding(
-          padding: const EdgeInsets.only(top: 3),
+          padding: const EdgeInsets.only(top: 5),
           child: Text(
             'Kuota penuh. Tombol + dinonaktifkan.',
             maxLines: 1,
