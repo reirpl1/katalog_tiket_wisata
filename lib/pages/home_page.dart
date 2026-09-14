@@ -32,10 +32,12 @@ class _HomePageState extends State<HomePage> {
 
   int _hitungTiketTersisa(List<ObjekWisata> daftar) {
   int totalTiket = 0;
+
   for (final objek in daftar) {
     totalTiket += objek.kuotaHarian;
     totalTiket -= _tiketDipilih[objek.namaObjek] ?? 0;
   }
+
   return totalTiket;
 }
 
@@ -132,16 +134,29 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-          'Jelajah Nusantara',
-          style: GoogleFonts.poppins(
+      centerTitle: true,
+      title: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.terrain,
             color: Colors.white,
-            fontWeight: FontWeight.w600,
+            size: 21,
           ),
-        ),
-        backgroundColor: _navy,
-        foregroundColor: Colors.white, // diganti sand bs
+          const SizedBox(width: 6),
+          Text(
+            'Jelajah Nusantara',
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+            ),
+          ),
+        ],
       ),
+      backgroundColor: _navy,
+      foregroundColor: Colors.white,
+    ),
 
      body: Column(
         children: [
@@ -206,10 +221,9 @@ class _HomePageState extends State<HomePage> {
                 // =========================
                 Expanded(
                   child: Wrap(
-                    spacing: 6,
-                    runSpacing: 6,
+                    spacing: 8,
+                    runSpacing: 10,
                     children: [
-
                       _ChipKategori(
                         label: 'Semua',
                         terpilih: _kategoriTerpilih == null,
@@ -223,8 +237,7 @@ class _HomePageState extends State<HomePage> {
                       for (final kategori in _daftarKategori)
                         _ChipKategori(
                           label: kategori,
-                          terpilih:
-                              _kategoriTerpilih == kategori,
+                          terpilih: _kategoriTerpilih == kategori,
                           onTap: () {
                             setState(() {
                               _kategoriTerpilih = kategori;
@@ -246,6 +259,7 @@ class _HomePageState extends State<HomePage> {
                   icon: const Icon(
                     Icons.filter_list_rounded,
                     color: _navy,
+                    size: 27,
                   ),
 
                   onSelected: (String pilihan) {
@@ -289,18 +303,15 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Icon(
                               Icons.arrow_downward_rounded,
-                              color:
-                                  _urutanDipilih ==
-                                          'Harga tiket termurah'
-                                      ? _navy
-                                      : Colors.grey,
+                              color: _urutanDipilih ==
+                                      'Harga tiket termurah'
+                                  ? _navy
+                                  : Colors.grey,
                             ),
 
                             const SizedBox(width: 10),
 
-                            const Text(
-                              'Harga tiket termurah',
-                            ),
+                            const Text('Harga tiket termurah'),
 
                             const Spacer(),
 
@@ -321,18 +332,15 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Icon(
                               Icons.arrow_upward_rounded,
-                              color:
-                                  _urutanDipilih ==
-                                          'Harga tiket termahal'
-                                      ? _navy
-                                      : Colors.grey,
+                              color: _urutanDipilih ==
+                                      'Harga tiket termahal'
+                                  ? _navy
+                                  : Colors.grey,
                             ),
 
                             const SizedBox(width: 10),
 
-                            const Text(
-                              'Harga tiket termahal',
-                            ),
+                            const Text('Harga tiket termahal'),
 
                             const Spacer(),
 
@@ -441,7 +449,7 @@ class _HomePageState extends State<HomePage> {
                       );
 
                       const tinggiKontenLain =
-                          240.0;
+                          265.0;
 
                       final tinggiKartu =
                           tinggiGambar +
@@ -529,27 +537,45 @@ class _ChipKategori extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-      label: Text(label), // tanpa style eksplisit di sini
+      label: Text(
+        label,
+        maxLines: 1,
+        softWrap: false,
+        overflow: TextOverflow.visible,
+      ),
 
       selected: terpilih,
 
       onSelected: (_) => onTap(),
 
       selectedColor: _navy,
-
       backgroundColor: _sand,
 
       labelStyle: GoogleFonts.poppins(
-        color: terpilih ? Colors.white : const Color(0xFF2C2A28),
+        color: terpilih
+            ? Colors.white
+            : const Color(0xFF2C2A28),
         fontWeight: FontWeight.w600,
-        fontSize: 12,
+        fontSize: 15,
       ),
 
-      labelPadding: const EdgeInsets.symmetric(horizontal: 8), // tambahan ruang biar tidak mepet
+      labelPadding: const EdgeInsets.symmetric(
+        horizontal: 10,
+      ),
+
+      padding: const EdgeInsets.symmetric(
+        horizontal: 4,
+        vertical: 5,
+      ),
+
+      materialTapTargetSize:
+          MaterialTapTargetSize.shrinkWrap,
 
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        side: BorderSide.none,
+        side: BorderSide(
+          color: _navy.withValues(alpha: 0.25),
+        ),
       ),
     );
   }

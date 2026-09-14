@@ -91,6 +91,7 @@ class ObjekWisataCard extends StatelessWidget {
                     ),
                   ),
 
+
                   Text(
                     data.jenis,
                     maxLines: 1,

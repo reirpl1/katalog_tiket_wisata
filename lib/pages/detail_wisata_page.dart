@@ -105,7 +105,7 @@ class _DetailWisataPageState extends State<DetailWisataPage> {
               ? (constraints.maxWidth >= 900 ? 32 : 16)
               : 12;
 
-          final double verticalPadding = isWide ? 14 : 24;
+          final double verticalPadding = isWide ? 14 : 10;
 
           // =====================================================
           // TINGGI GALERI
@@ -350,21 +350,23 @@ class _DetailWisataPageState extends State<DetailWisataPage> {
                                       child: Column(
                                         children: [
                                           _BarisRincian(
-                                            icon: Icons
-                                                .location_on_outlined,
+                                            icon: Icons.account_balance_outlined,
                                             label: 'Nama Objek',
                                             nilai:
                                                 data.namaObjek,
                                           ),
                                           _BarisRincian(
-                                            icon: Icons
-                                                .sell_outlined,
+                                            icon: Icons.location_on_outlined,
+                                            label: 'lokasi',
+                                            nilai:  data.lokasi,
+                                          ),
+                                          _BarisRincian(
+                                            icon: Icons.sell_outlined,
                                             label: 'Jenis',
                                             nilai: data.jenis,
                                           ),
                                           _BarisRincian(
-                                            icon: Icons
-                                                .confirmation_number_outlined,
+                                            icon: Icons.confirmation_number_outlined,
                                             label: 'Tiket Dewasa',
                                             nilai:
                                                 formatRupiah(
@@ -408,11 +410,17 @@ class _DetailWisataPageState extends State<DetailWisataPage> {
                               : Column(
                                   children: [
                                     _BarisRincian(
-                                      icon: Icons
-                                          .account_balance_outlined,
+                                      icon: Icons.account_balance_outlined,
                                       label: 'Nama Objek',
                                       nilai: data.namaObjek,
                                     ),
+
+                                    _BarisRincian(
+                                      icon: Icons.location_on_outlined,
+                                      label: 'Lokasi',
+                                      nilai: data.lokasi,
+                                    ),
+
                                     _BarisRincian(
                                       icon: Icons.sell_outlined,
                                       label: 'Jenis',

@@ -3,10 +3,11 @@ import '../models/objek_wisata.dart';
 final List<ObjekWisata> daftarWisata = [
   ObjekWisata(
     namaObjek: 'Raja Ampat',
+    lokasi: 'Papua Barat Daya',
     jenis: 'Pantai & Laut',
     tiketDewasa: 100000,
     tiketAnak: 90000,
-    kuotaHarian: 100,
+    kuotaHarian: 400,
     gambar: 'assets/images/raja_ampat.jpg',
     galeriGambar: [
       'assets/galeri/rajaampat_galeri1.jpg',
@@ -17,10 +18,11 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Candi Borobudur',
+      lokasi: 'Magelang, Jawa Tengah',
       jenis: 'Candi',
       tiketDewasa: 80000,
       tiketAnak: 75000,
-      kuotaHarian: 130,
+      kuotaHarian: 250,
       gambar: 'assets/images/candi_borobudur.jpg',
       galeriGambar: [
         'assets/galeri/borobudur_galeri1.jpg',
@@ -31,6 +33,7 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Goa Pindul',
+      lokasi: 'Gunungkidul, Yogyakarta',
       jenis: 'Goa',
       tiketDewasa: 50000,
       tiketAnak: 40000,
@@ -45,6 +48,7 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Pantai Wediombo',
+      lokasi: 'Gunungkidul, Yogyakarta',
       jenis: 'Pantai & Laut',
       tiketDewasa: 20000,
       tiketAnak: 18000,
@@ -59,10 +63,11 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Gunung Bromo',
+      lokasi: 'Probolinggo, Jawa Timur',
       jenis: 'Gunung',
       tiketDewasa: 80000,
       tiketAnak: 75000  ,
-      kuotaHarian:300,
+      kuotaHarian:100,
       gambar: 'assets/images/gunung_bromo.jpg',
       galeriGambar: [
         'assets/galeri/bromo_galeri1.jpg',
@@ -73,6 +78,7 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Hutan Pinus Embun Pagi',
+      lokasi:  'Batu, Jawa Timur',
       jenis: 'Hutan',
       tiketDewasa: 25000,
       tiketAnak: 23000,
@@ -87,10 +93,11 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Pantai Timang',
+      lokasi: 'Gunungkidul, Yogyakarta',
       jenis: 'Pantai & Laut',
       tiketDewasa: 60000,
       tiketAnak: 50000,
-      kuotaHarian: 1000,
+      kuotaHarian: 700,
       gambar: 'assets/images/pantai_timang.jpg',
       galeriGambar: [
         'assets/galeri/timang_galeri1.jpg',
@@ -101,10 +108,11 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Gembira Loka',
+      lokasi: 'Yogyakarta',
       jenis: 'Kebun Binatang',
       tiketDewasa: 85000,
       tiketAnak: 80000,
-      kuotaHarian: 1500,
+      kuotaHarian: 900,
       gambar: 'assets/images/gembira_loka.jpg',
       galeriGambar: [
         'assets/galeri/loka_galeri1.jpg',
@@ -115,10 +123,11 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Museum Nasional',
+      lokasi: 'Jakarta Pusat, DKI Jakarta',
       jenis: 'Museum',
       tiketDewasa: 85000,
       tiketAnak: 80000,
-      kuotaHarian: 1500,
+      kuotaHarian: 800,
       gambar: 'assets/images/museum_nasional.jpg',
       galeriGambar: [
         'assets/galeri/nasional_galeri1.jpg',
@@ -129,10 +138,11 @@ final List<ObjekWisata> daftarWisata = [
 
    ObjekWisata(
       namaObjek: 'Museum Angkut',
+      lokasi: 'Batu, Jawa Timur',
       jenis: 'Museum',
       tiketDewasa: 110000,
       tiketAnak: 110000,
-      kuotaHarian: 75,
+      kuotaHarian: 85,
       gambar: 'assets/images/museum_angkut.jpg',
       galeriGambar: [
         'assets/galeri/angkut_galeri1.jpg',

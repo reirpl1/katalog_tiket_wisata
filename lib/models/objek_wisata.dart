@@ -8,6 +8,7 @@ class ObjekWisata {
   int kuotaHarian;
   final String gambar;
   final List<String> galeriGambar;
+  final String lokasi;
 
     ObjekWisata({
     required this.namaObjek,
@@ -17,6 +18,7 @@ class ObjekWisata {
     required this.kuotaHarian,
     required this.gambar,
     this.galeriGambar = const [],
+    required this.lokasi,
   });
 
   String get gambarUntukDetail => galeriGambar.isNotEmpty || galeriGambar.isNotEmpty ? galeriGambar.first : gambar;
