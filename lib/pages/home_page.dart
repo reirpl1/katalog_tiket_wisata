@@ -216,38 +216,46 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                // =========================
+                                // =========================
                 // KATEGORI WISATA
                 // =========================
                 Expanded(
-                  child: Wrap(
-                    spacing: 8,
-                    runSpacing: 10,
-                    children: [
-                      _ChipKategori(
-                        label: 'Semua',
-                        terpilih: _kategoriTerpilih == null,
-                        onTap: () {
-                          setState(() {
-                            _kategoriTerpilih = null;
-                          });
-                        },
-                      ),
+                  child: ClipRect(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _ChipKategori(
+                            label: 'Semua',
+                            terpilih: _kategoriTerpilih == null,
+                            onTap: () {
+                              setState(() {
+                                _kategoriTerpilih = null;
+                              });
+                            },
+                          ),
 
-                      for (final kategori in _daftarKategori)
-                        _ChipKategori(
-                          label: kategori,
-                          terpilih: _kategoriTerpilih == kategori,
-                          onTap: () {
-                            setState(() {
-                              _kategoriTerpilih = kategori;
-                            });
-                          },
-                        ),
-                    ],
+                          const SizedBox(width: 8),
+
+                          for (final kategori in _daftarKategori) ...[
+                            _ChipKategori(
+                              label: kategori,
+                              terpilih: _kategoriTerpilih == kategori,
+                              onTap: () {
+                                setState(() {
+                                  _kategoriTerpilih = kategori;
+                                });
+                              },
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-
                 const SizedBox(width: 8),
 
                 // =========================
